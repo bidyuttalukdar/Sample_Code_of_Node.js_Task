@@ -1,0 +1,8 @@
+const express = require("express") //to create the express app
+const bodyPareser = require("body-parser") //to accept the request
+
+const app = express().use(bodyPareser.json())
+
+app.listen(3000,()=>{
+    console.log("app is listening at port 3000")
+})
