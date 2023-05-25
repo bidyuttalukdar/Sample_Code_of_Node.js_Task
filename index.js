@@ -1,37 +1,23 @@
-const nodemailer = require("nodemailer");
+const express = require("express")
+// const body_parser =require("body-parser")
+//creating the app
+const app = express();
+// app.use(body_parser);
+const SendEmail = require('./controller/sendMail')
+const PORT =3000;
 
-const transporter = nodemailer.createTransport({
-    service:"gmail",
-    auth:{
-        user:"bidyutofficial01@.com",
-        pass:"xxxxx"
-    }
+//routes
+app.get("/", (req, res) => {
+    res.send("Index Page")   
 })
-
-const htmlText = `
-    <p>Bidyut Talukdar<p>
-`
-
-const mailOption = {
-    from : 'bidyutofficial01@gmail.com',
-    to: 'bidyut@.com',
-    subject:'Testing',
-    text:'Testing mail body' //htmlText
+app.get("/sendEmail",SendEmail)
+const startServer = async() =>{
+    try{
+        app.listen(PORT,(req,res)=>{
+            console.log("server is running")
+        })
+    }catch(e){
+        console.error(e);
+    }
 }
-
-//incase mail need to send to multiple user
-// var mailOptions = {
-//     from: 'youremail@gmail.com',
-//     to: 'myfriend@yahoo.com, myotherfriend@yahoo.com',
-//     subject: 'Sending Email using Node.js',
-//     text: 'That was easy!'
-// }
-
-transporter.sendMail(mailOption,function(error,info){
-    if(error){
-        console.log(error+" msg");
-    }else{
-        console.log("Mail Send ",info)
-    }
-
-})
+startServer();
